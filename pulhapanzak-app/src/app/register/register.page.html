@@ -27,7 +27,7 @@
         </svg>
         <ion-label>Nombres</ion-label>
       </div>
-      <ion-input formControlName="fullName" class="input-modify" [ngClass]="{'error': fullName.invalid && (fullName.dirty || fullName.touched)}"></ion-input>
+      <ion-input formControlName="fullName" class="input-modify" [ngClass]="{'error': firstName.invalid && (firstName.dirty || firstName.touched)}"></ion-input>
     </div>
 
     <!-- Apellidos -->
@@ -82,7 +82,7 @@
         </svg>
         <ion-label>Número de Identidad</ion-label>
       </div>
-      <ion-input formControlName="identityNumber" type="text" class="input-modify" [ngClass]="{'error': identityNumber.invalid && (identityNumber.dirty || identityNumber.touched)}" (keydown)="allowOnlyNumbers($event)"></ion-input>
+      <ion-input formControlName="identityNumber" type="text" class="input-modify" [ngClass]="{'error': identityNumber.invalid && (identityNumber.dirty || identityNumber.touched)}" maxlength="13"></ion-input>
     </div>
 
     <!-- Número de Teléfono -->
@@ -96,11 +96,8 @@
         </svg>
         <ion-label>Número de Teléfono</ion-label>
       </div>
-      <ion-input formControlName="phoneNumber" type="tel" class="input-modify" [ngClass]="{'error': phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)}" (keydown)="allowOnlyNumbers($event)"></ion-input>
+      <ion-input formControlName="phoneNumber" type="tel" class="input-modify" [ngClass]="{'error': phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)}"></ion-input>
     </div>
-    <ion-icon>
-      <i class="fa-regular fa-user"></i>
-    </ion-icon>
-    <ion-button expand="full" type="submit" [disabled]="registerForm.invalid" [style.background]="registerForm.invalid ? '#D3D3D3' : '#FB0021'">Registrar</ion-button>
+    <ion-button expand="full" type="submit" shape="round" [disabled]="registerForm.invalid" [ngClass]="{'btn-active': !registerForm.invalid, 'btn-inactive': registerForm.invalid}">Registrar</ion-button>
   </form>
 </ion-content>

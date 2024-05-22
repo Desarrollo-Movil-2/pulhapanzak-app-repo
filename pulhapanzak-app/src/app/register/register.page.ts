@@ -39,17 +39,16 @@ export class RegisterPage {
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
-      fullName: ['', Validators.required],
+      firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       identityNumber: ['', [Validators.required, Validators.minLength(13), Validators.pattern(/^\d+$/)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^\d+$/)]],
-      birthDate: ['', Validators.required]
+      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^\d+$/)]]
     });
   }
 
-  get fullName() { return this.registerForm.get('fullName')!; }
+  get firstName() { return this.registerForm.get('firstName')!; }
   get lastName() { return this.registerForm.get('lastName')!; }
   get email() { return this.registerForm.get('email')!; }
   get password() { return this.registerForm.get('password')!; }
@@ -64,12 +63,5 @@ export class RegisterPage {
     }
   }
 
-  allowOnlyNumbers(event: KeyboardEvent): boolean {
-    const charCode = event.charCode ? event.charCode : event.keyCode;
-    if (charCode < 48 || charCode > 57) {
-      event.preventDefault();
-      return false;
-    }
-    return true;
-  }
+  
 }
