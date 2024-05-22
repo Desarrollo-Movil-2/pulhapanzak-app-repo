@@ -1,10 +1,14 @@
 .error {
-    border: 2px solid #FB0021 !important; /* Make sure errors are visually noticeable */
+    border: 2px solid #FB0021 !important;
   }
   
   .btn-back {
+    padding-left: 15px;
     --background: transparent;
     --box-shadow: 0 0 0 0;
+  }
+  .btn-back:hover{
+    cursor: pointer;
   }
   
   .title-content {

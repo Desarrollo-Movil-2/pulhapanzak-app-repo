@@ -7,7 +7,21 @@
   top: 50%;
   transform: translateY(-50%);
 }
-
+.register-link{
+  padding: 15px;
+  border: solid gray 1px;
+  background-color: #FB0021;
+  border-radius: 15px;
+}
+.register-link:hover{
+  cursor: pointer;
+  border: solid black 2px;
+  background-color: #dc0623;
+  font-weight: bold;
+}
+.div-router{
+  margin-bottom: 5rem;
+}
 #container strong {
   font-size: 20px;
   line-height: 26px;

@@ -1,6 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { User } from '../Models/IUser';
 import {
   IonContent,
@@ -12,7 +13,9 @@ import {
   IonInput,
   IonButton,
   IonIcon,
+  IonRouterLink
 } from '@ionic/angular/standalone';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +34,9 @@ import {
     IonButton,
     IonIcon,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterLink,
+    IonRouterLink
   ]
 })
 export class RegisterPage {
