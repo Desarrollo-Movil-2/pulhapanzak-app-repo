@@ -1,18 +1,17 @@
-import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { User } from '../Models/IUser';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonItem, 
-  IonLabel, 
-  IonInput, 
-  IonButton, 
-  IonIcon, 
-  IonDatetime 
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  IonIcon,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -22,23 +21,20 @@ import {
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
-    IonContent, 
-    IonHeader, 
-    IonTitle, 
-    IonToolbar, 
-    IonItem, 
-    IonLabel, 
-    IonInput, 
-    IonButton, 
-    IonIcon, 
-    IonDatetime, 
-    CommonModule, 
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonItem,
+    IonLabel,
+    IonInput,
+    IonButton,
+    IonIcon,
+    CommonModule,
     ReactiveFormsModule
   ]
 })
 export class RegisterPage {
-  @ViewChild('datePicker', { static: false }) datePicker!: IonDatetime;
-  
   registerForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -68,12 +64,12 @@ export class RegisterPage {
     }
   }
 
-  openDatePicker() {
-    this.datePicker.open();
-  }
-
-  onDateChange(event: any) {
-    this.registerForm.patchValue({ birthDate: event.detail.value });
-    this.datePicker.close();
+  allowOnlyNumbers(event: KeyboardEvent): boolean {
+    const charCode = event.charCode ? event.charCode : event.keyCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+      return false;
+    }
+    return true;
   }
 }
