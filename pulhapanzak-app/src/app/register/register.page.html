@@ -98,7 +98,9 @@
       </div>
       <ion-input formControlName="phoneNumber" type="tel" class="input-modify" [ngClass]="{'error': phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)}" (keydown)="allowOnlyNumbers($event)"></ion-input>
     </div>
-
+    <ion-icon>
+      <i class="fa-regular fa-user"></i>
+    </ion-icon>
     <ion-button expand="full" type="submit" [disabled]="registerForm.invalid" [style.background]="registerForm.invalid ? '#D3D3D3' : '#FB0021'">Registrar</ion-button>
   </form>
 </ion-content>
