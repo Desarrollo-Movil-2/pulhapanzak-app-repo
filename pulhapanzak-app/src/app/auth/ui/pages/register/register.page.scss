@@ -1,10 +1,14 @@
 .error {
-    border: 2px solid #FB0021 !important; /* Make sure errors are visually noticeable */
+    border: 2px solid #FB0021 !important;
   }
   
   .btn-back {
+    padding-left: 15px;
     --background: transparent;
     --box-shadow: 0 0 0 0;
+  }
+  .btn-back:hover{
+    cursor: pointer;
   }
   
   .title-content {
@@ -43,5 +47,19 @@
     border: solid gray 1px;
     margin-top: 1.2rem;
     border-radius: 15px;
+    padding: 5px 15px 5px 15px!important;
+  }
+  
+
+  .btn-active {
+    --background: #FB0021;
+    --color: #FFF;
+    --border-radius:12px!important
+  }
+  
+  .btn-inactive {
+    --background: gray;
+    --color: #D3D3D3;
+    --border-radius:12px!important
   }
   
