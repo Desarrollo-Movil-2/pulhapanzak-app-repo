@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './shared/guards/auth-guard';
+import { inject } from '@angular/core';
 
 export const routes: Routes = [
   {
@@ -8,6 +10,15 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./auth/ui/pages/login/login.page').then( m => m.LoginPage)
+  },
+  {
+    path: 'tabs',
+    loadComponent: () => import('./shared/ui/pages/tabs/tabs.page').then( m => m.TabsPage)
+  },
+  {
+    path: '**',
+    redirectTo: '/login',
+    pathMatch: 'full',
   },
 
 ];

@@ -1,0 +1,76 @@
+.container-view {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.error {
+  border: 2px solid #fb0021 !important;
+}
+
+.btn-back {
+  --background: transparent;
+  --box-shadow: 0 0 0 0;
+}
+
+.btn-back:hover {
+  cursor: pointer;
+}
+
+.title-content {
+  text-align: center;
+  color: #fb0021;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.formulario {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container-forms {
+  width: 90%;
+  display: flex;
+  flex-direction: column !important;
+  margin-bottom: 1.6rem;
+}
+
+.div-label {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.div-label > ion-label {
+  margin-left: 10px;
+}
+
+.input-modify {
+  border: solid gray 1px;
+  margin-top: 1.2rem;
+  border-radius: 15px;
+  padding: 5px 15px 5px 15px !important;
+}
+
+.btn-active {
+  --background: #fb0021;
+  --color: #fff;
+  --border-radius: 12px !important;
+}
+
+.btn-inactive {
+  --background: gray;
+  --color: #d3d3d3;
+  --border-radius: 12px !important;
+}
+
+.register-link {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
