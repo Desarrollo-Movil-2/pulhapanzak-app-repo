@@ -1,13 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
+      <ion-title>Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div class="profile-container">
+    <!-- Aquí puedes agregar el contenido del perfil del usuario -->
+
+    <ion-button (click)="logout()" expand="full" shape="round" color="danger">
+      Cerrar Sesión
+    </ion-button>
+  </div>
 </ion-content>

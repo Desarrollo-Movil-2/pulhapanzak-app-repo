@@ -12,14 +12,16 @@ export const routes: Routes = [
     loadComponent: () => import('./auth/ui/pages/login/login.page').then( m => m.LoginPage)
   },
   {
-    path: 'tabs',
-    loadComponent: () => import('./shared/ui/pages/tabs/tabs.page').then( m => m.TabsPage)
+    path: '',
+    loadChildren: () => import('./shared/ui/pages/tabs/tabs.routes').then(m => m.routes),
+    canActivate: [() => inject(AuthGuard).canActivate()],
   },
   {
     path: '**',
     redirectTo: '/login',
     pathMatch: 'full',
-  },  {
+  },
+  {
     path: 'profile',
     loadComponent: () => import('./profile/ui/pages/profile/profile.page').then( m => m.ProfilePage)
   },

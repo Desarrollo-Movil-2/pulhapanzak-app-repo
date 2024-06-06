@@ -1,8 +1,8 @@
 <ion-content class="container-view">
-  <p class="title-content">Iniciar Sesión</p>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="formulario">
-    <div class="container-forms">
-      <div class="div-label">
+  <p class="title-login">Iniciar Sesión</p>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="formulario-login">
+    <div class="container-forms-login">
+      <div class="div-label-login">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="icon icon-tabler icon-tabler-mail"
@@ -27,13 +27,14 @@
         formControlName="email"
         type="email"
         class="input-modify"
-        [ngClass]="{ error: isEmailInvalid }"
+        [ngClass]="{ error: isEmailFormatInvalid || isEmailRequired}"
       ></ion-input>
-      <p *ngIf="isEmailInvalid" class="error-message">El correo es inválido</p>
+      <p *ngIf="isEmailFormatInvalid" class="error-message">El correo es inválido</p>
+      <p *ngIf="isEmailRequired" class="error-message">El correo es requerido</p>
     </div>
 
-    <div class="container-forms">
-      <div class="div-label">
+    <div class="container-forms-login">
+      <div class="div-label-login">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="icon icon-tabler icon-tabler-lock"
@@ -59,13 +60,14 @@
         type="password"
         formControlName="password"
         class="input-modify"
-        [ngClass]="{ error: isPasswordInvalid }"
+        [ngClass]="{ error: isPasswordRequired }"
       >
         <ion-input-password-toggle slot="end"></ion-input-password-toggle>
       </ion-input>
-      <p *ngIf="isPasswordInvalid" class="error-message">
+      <p *ngIf="isPasswordRequired" class="error-message">
         La contraseña es requerida
       </p>
+      <p class="pass-forget">¿Olvidaste tu contraseña?</p>
     </div>
 
     <ion-button
@@ -77,12 +79,23 @@
         'btn-active': !loginForm.invalid,
         'btn-inactive': loginForm.invalid
       }"
-      >Iniciar Sesión</ion-button
-    >
+    >Iniciar Sesión</ion-button>
   </form>
+  
+  <div class="divider">
+    <span class="divider-text"> O </span>
+  </div>
+  
+  <div class="container-google-auth">
+    <ion-button class="btn-google-auth" (click)="onGoogleLogin()">
+      <img src="assets/icon/google-icon.png" alt="Google Icon" class="google-icon">
+      Iniciar sesión con Google
+    </ion-button>
+  </div>
+  
   <div class="register-link">
-    <ion-router-link routerLink="/register" class="btn-back"
-      >Registrarme</ion-router-link
-    >
+    <ion-router-link routerLink="/register" class="btn-back">
+      <span>¿No tienes cuenta?</span><span class="span-green">Regístrate ahora</span>
+    </ion-router-link>
   </div>
 </ion-content>

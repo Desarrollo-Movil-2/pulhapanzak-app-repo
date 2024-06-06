@@ -14,11 +14,11 @@ import {
   IonInputPasswordToggle,
   IonContent,
   IonTitle,
-  ToastController,
   IonModal,
+  AlertController,
 } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
-import { Login } from 'src/app/auth/models/login-interface';
+import { ILogin } from 'src/app/auth/models/login-interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
@@ -43,7 +43,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class LoginPage implements OnInit {
   private _authService = inject(AuthService);
   private _router = inject(Router);
-  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -60,36 +60,32 @@ export class LoginPage implements OnInit {
   async checkActiveSession(): Promise<void> {
     const isUserLoggedIn = await this._authService.isUserLoggedIn();
     if (isUserLoggedIn) {
-      this._router.navigate(['/tabs']); 
+      this._router.navigate(['']);
     }
   }
 
-  get isEmailInvalid(): boolean {
+  get isEmailRequired(): boolean {
     const emailControl = this.loginForm.get('email');
-    return (
-      (emailControl!.hasError('required') &&
-        (emailControl!.dirty || emailControl!.touched)) ||
-      (emailControl!.hasError('email') &&
-        (emailControl!.dirty || emailControl!.touched))
-    );
+    return emailControl!.hasError('required') && (emailControl!.dirty || emailControl!.touched);
   }
 
-  get isPasswordInvalid(): boolean {
+  get isEmailFormatInvalid(): boolean {
+    const emailControl = this.loginForm.get('email');
+    return emailControl!.hasError('email') && (emailControl!.dirty || emailControl!.touched);
+  }
+
+  get isPasswordRequired(): boolean {
     const passwordControl = this.loginForm.get('password');
-    return (
-      passwordControl!.hasError('required') &&
-      (passwordControl!.dirty || passwordControl!.touched)
-    );
+    return passwordControl!.hasError('required') && (passwordControl!.dirty || passwordControl!.touched);
   }
 
   async onSubmit(): Promise<void> {
     const isUserLoggedIn = await this._authService.isUserLoggedIn();
     if (isUserLoggedIn) {
-      this.showAlert('Ya existe una sesión activa', true);
-      this._router.navigate(['/tabs']);
+      this._router.navigate(['']);
     } else {
       if (this.loginForm.valid) {
-        const login: Login = {
+        const login: ILogin = {
           email: this.loginForm?.get('email')?.value,
           password: this.loginForm?.get('password')?.value,
         };
@@ -97,23 +93,32 @@ export class LoginPage implements OnInit {
         this._authService
           .signInWithEmailAndPassword(login)
           .then(() => {
-            this._router.navigate(['/tabs']);
-            this.showAlert('Ha iniciado sesión correctamente');
+            this._router.navigate(['']);
           })
           .catch((error) => {
-            this.showAlert('Upps, correo o contraseña inválida', true);
+            this.showAlert('Upps, correo o contraseña inválida');
+            console.error('Upps, correo o contraseña inválida', error);
           });
       }
     }
   }
 
-  async showAlert(message: string, error: boolean = false): Promise<void> {
-    const toast = await this.toastController.create({
+  async onGoogleLogin(): Promise<void> {
+    try {
+      await this._authService.signInWithGoogle();
+      this._router.navigate(['']);
+    } catch (error) {
+      this.showAlert('Error al iniciar sesión con Google');
+      console.error('Error al iniciar sesión con Google', error);
+    }
+  }
+
+  async showAlert(message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Error',
       message: message,
-      duration: 5000,
-      position: 'bottom',
-      color: error ? 'danger' : 'success',
+      buttons: ['OK'],
     });
-    await toast.present();
+    await alert.present();
   }
 }
