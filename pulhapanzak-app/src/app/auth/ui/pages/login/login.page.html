@@ -67,7 +67,7 @@
       <p *ngIf="isPasswordRequired" class="error-message">
         La contraseña es requerida
       </p>
-      <p class="pass-forget">¿Olvidaste tu contraseña?</p>
+      <p class="pass-forget" (click)="onForgotPassword()">¿Olvidaste tu contraseña?</p>
     </div>
 
     <ion-button
@@ -98,4 +98,4 @@
       <span>¿No tienes cuenta?</span><span class="span-green">Regístrate ahora</span>
     </ion-router-link>
   </div>
-</ion-content>
+</ion-content> 

@@ -1,22 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  IonInput,
-  IonLabel,
-  IonButton,
-  IonRouterLink,
-  IonInputPasswordToggle,
-  IonContent,
-  IonTitle,
-  IonModal,
-  AlertController,
-} from '@ionic/angular/standalone';
+import { IonInput, IonLabel, IonButton, IonRouterLink, IonInputPasswordToggle, IonContent, IonTitle, IonModal, AlertController } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { ILogin } from 'src/app/auth/models/login-interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -53,16 +38,16 @@ export class LoginPage implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit = (): void => {
     this.checkActiveSession();
-  }
+  };
 
-  async checkActiveSession(): Promise<void> {
+  checkActiveSession = async (): Promise<void> => {
     const isUserLoggedIn = await this._authService.isUserLoggedIn();
     if (isUserLoggedIn) {
       this._router.navigate(['']);
     }
-  }
+  };
 
   get isEmailRequired(): boolean {
     const emailControl = this.loginForm.get('email');
@@ -79,7 +64,7 @@ export class LoginPage implements OnInit {
     return passwordControl!.hasError('required') && (passwordControl!.dirty || passwordControl!.touched);
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit = async (): Promise<void> => {
     const isUserLoggedIn = await this._authService.isUserLoggedIn();
     if (isUserLoggedIn) {
       this._router.navigate(['']);
@@ -101,9 +86,9 @@ export class LoginPage implements OnInit {
           });
       }
     }
-  }
+  };
 
-  async onGoogleLogin(): Promise<void> {
+  onGoogleLogin = async (): Promise<void> => {
     try {
       await this._authService.signInWithGoogle();
       this._router.navigate(['']);
@@ -111,14 +96,30 @@ export class LoginPage implements OnInit {
       this.showAlert('Error al iniciar sesión con Google');
       console.error('Error al iniciar sesión con Google', error);
     }
-  }
+  };
 
-  async showAlert(message: string): Promise<void> {
+  onForgotPassword = async (): Promise<void> => {
+    const email = this.loginForm.get('email')?.value;
+    if (!email) {
+      this.showAlert('Por favor, introduce tu correo electrónico');
+      return;
+    }
+
+    try {
+      await this._authService.resetPassword(email);
+      this.showAlert('Correo de restablecimiento de contraseña enviado. Por favor, revisa tu bandeja de entrada.');
+    } catch (error) {
+      this.showAlert('Error al enviar el correo de restablecimiento de contraseña');
+      console.error('Error al enviar el correo de restablecimiento de contraseña', error);
+    }
+  };
+
+  showAlert = async (message: string): Promise<void> => {
     const alert = await this.alertController.create({
-      header: 'Error',
+      header: 'Información',
       message: message,
       buttons: ['OK'],
     });
     await alert.present();
-  }
+  };
 }

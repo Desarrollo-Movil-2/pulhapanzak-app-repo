@@ -8,7 +8,8 @@ import {
   User,
   GoogleAuthProvider,
   signInWithPopup,
-  signOut
+  signOut,
+  sendPasswordResetEmail,
 } from '@angular/fire/auth';
 import {
   Firestore,
@@ -34,23 +35,21 @@ export class AuthService {
   private _firestore = inject(Firestore);
   private _collection = collection(this._firestore, PATH);
 
-  // Método para obtener el usuario actual de la sesión
-  async getCurrentUser(): Promise<User | null> {
+  getCurrentUser = async (): Promise<User | null> => {
     return new Promise((resolve) => {
       this._auth.onAuthStateChanged(user => {
         console.log(user);
         resolve(user);
       });
     });
-  }
+  };
 
-  async isUserLoggedIn(): Promise<boolean> {
+  isUserLoggedIn = async (): Promise<boolean> => {
     const user = await this.getCurrentUser();
     return !!user;
-  }
+  };
 
-  // Método para registrar un usuario con correo y contraseña
-  async createUserWithEmailAndPassword(model: ILogin): Promise<UserCredential> {
+  createUserWithEmailAndPassword = async (model: ILogin): Promise<UserCredential> => {
     const isUserLoggedIn = await this.isUserLoggedIn();
     if (isUserLoggedIn) {
       return Promise.reject('User is already logged in');
@@ -60,37 +59,33 @@ export class AuthService {
       uid: response.user?.uid || '',
       email: model.email,
       password: model.password,
-      phoneNumber: '',  
-      name: '',  
+      phoneNumber: '',
+      name: '',
       role: 'user',
       photoUrl: ''
     };
     await this.createUserInFirestore(user);
     return response;
-  }
+  };
 
-  // Método para iniciar sesión con correo y contraseña
-  async signInWithEmailAndPassword(model: ILogin): Promise<UserCredential> {
+  signInWithEmailAndPassword = async (model: ILogin): Promise<UserCredential> => {
     const isUserLoggedIn = await this.isUserLoggedIn();
     if (isUserLoggedIn) {
       return Promise.reject('User is already logged in');
     }
     return await signInWithEmailAndPassword(this._auth, model.email, model.password);
-  }
+  };
 
-  // Método para iniciar sesión con Google
-  async signInWithGoogle(): Promise<UserCredential> {
+  signInWithGoogle = async (): Promise<UserCredential> => {
     const provider = new GoogleAuthProvider();
     return await signInWithPopup(this._auth, provider);
-  }
+  };
 
-  // Método para cerrar sesión
-  async signOut(): Promise<void> {
+  signOut = async (): Promise<void> => {
     await signOut(this._auth);
-  }
+  };
 
-  // Método para crear un usuario en Firestore
-  async createUserInFirestore(user: IUser): Promise<void> {
+  createUserInFirestore = async (user: IUser): Promise<void> => {
     const userRef = doc(this._collection, user.uid);
     return setDoc(userRef, {
       uid: user.uid,
@@ -100,10 +95,9 @@ export class AuthService {
       role: 'user',
       photoUrl: user.photoUrl,
     });
-  }
+  };
 
-  // Método para actualizar un usuario en Firestore
-  async updateUserInFirestore(user: IUser): Promise<void> {
+  updateUserInFirestore = async (user: IUser): Promise<void> => {
     if (!user.uid) {
       return Promise.reject('User id is required');
     }
@@ -115,19 +109,18 @@ export class AuthService {
       name: user.name,
       photoUrl: user.photoUrl,
     });
-  }
+  };
 
-  // Método para eliminar un usuario en Firestore
-  async deleteUserInFirestore(uid: string): Promise<void> {
+  deleteUserInFirestore = async (uid: string): Promise<void> => {
     if (!uid) {
       return Promise.reject('User id is required');
     }
 
     const userRef = doc(this._collection, uid);
     await deleteDoc(userRef);
-  }
+  };
 
-  async getUserByQueryId(uid: string): Promise<IUser | null> {
+  getUserByQueryId = async (uid: string): Promise<IUser | null> => {
     const userQuery = query(
       this._collection,
       where('uid', '==', uid),
@@ -141,9 +134,9 @@ export class AuthService {
 
     const user = userSnapshot.docs[0].data() as IUser;
     return user;
-  }
+  };
 
-  async getUserByDocId(uid: string): Promise<IUser | null> {
+  getUserByDocId = async (uid: string): Promise<IUser | null> => {
     const userRef = doc(this._collection, uid);
     const userSnapshot = await getDoc(userRef);
     if (!userSnapshot.exists()) {
@@ -152,5 +145,9 @@ export class AuthService {
 
     const user = userSnapshot.data() as IUser;
     return user;
-  }
+  };
+
+  resetPassword = async (email: string): Promise<void> => {
+    return sendPasswordResetEmail(this._auth, email);
+  };
 }

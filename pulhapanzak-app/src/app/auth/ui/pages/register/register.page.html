@@ -107,4 +107,21 @@
     
     <ion-button expand="full" type="submit" shape="round" [disabled]="registerForm.invalid" [ngClass]="{'btn-active': !registerForm.invalid, 'btn-inactive': registerForm.invalid}">Registrar</ion-button>
   </form>
+
+  <div class="divider">
+    <span class="divider-text"> O </span>
+  </div>
+  
+  <div class="container-google-auth">
+    <ion-button class="btn-google-auth">
+      <img src="assets/icon/google-icon.png" alt="Google Icon" class="google-icon">
+      Registrarse con Google
+    </ion-button>
+  </div>
+  
+  <div class="register-link">
+    <ion-router-link routerLink="/register" class="btn-back">
+      <span>¿Ya tienes cuenta?</span><span class="span-green" (click)="onGoogleLogin()">Iniciar Sesion</span>
+    </ion-router-link>
+  </div>
 </ion-content>

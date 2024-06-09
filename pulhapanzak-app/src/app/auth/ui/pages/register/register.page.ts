@@ -1,7 +1,7 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, inject, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { User } from '../../../../Models/IUser';
 import {
   IonContent,
@@ -14,8 +14,10 @@ import {
   IonButton,
   IonIcon,
   IonRouterLink,
-  IonInputPasswordToggle
+  IonInputPasswordToggle,
+  AlertController
 } from '@ionic/angular/standalone';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -42,6 +44,9 @@ import {
 })
 export class RegisterPage {
   registerForm: FormGroup;
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+  private alertController = inject(AlertController);
 
   constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -61,10 +66,29 @@ export class RegisterPage {
   get isIdentityNumberInvalid(): boolean { return this.registerForm.get('identityNumber')!.invalid && (this.registerForm.get('identityNumber')!.dirty || this.registerForm.get('identityNumber')!.touched); }
   get isPhoneNumberInvalid(): boolean { return this.registerForm.get('phoneNumber')!.invalid && (this.registerForm.get('phoneNumber')!.dirty || this.registerForm.get('phoneNumber')!.touched); }
 
-  onSubmit() {
+  onSubmit = (): void => {
     if (this.registerForm.valid) {
       const user: User = this.registerForm.value;
       console.log('User Registered:', user);
     }
   }
+
+  onGoogleLogin = async (): Promise<void> => {
+    try {
+      await this._authService.signInWithGoogle();
+      this._router.navigate(['']);
+    } catch (error) {
+      this.showAlert('Error al iniciar sesión con Google');
+      console.error('Error al iniciar sesión con Google', error);
+    }
+  };
+
+  showAlert = async (message: string): Promise<void> => {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  };
 }
