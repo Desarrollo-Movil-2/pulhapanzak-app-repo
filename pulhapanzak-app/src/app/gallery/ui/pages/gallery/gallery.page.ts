@@ -1,20 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { GalleryService } from 'src/app/gallery/services/gallery-services';
+import { IGallery } from 'src/app/gallery/models/IGallery';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.page.html',
   styleUrls: ['./gallery.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [CommonModule, IonicModule],
 })
 export class GalleryPage implements OnInit {
+  galleries: IGallery[] = [];
+  loading = true;
+  contentLoaded = false;
+  private galleryService = inject(GalleryService);
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const rawGalleries = await this.galleryService.getActiveGalleries();
+    this.galleries = rawGalleries.map(gallery => ({
+      ...gallery,
+      createdAt: (gallery.createdAt as Timestamp).toDate()
+    }));
+    if (this.galleries.length === 0) {
+      this.loading = false;
+    } else {
+      this.contentLoaded = true;
+    }
   }
 
+  imageLoaded() {
+    this.loading = false;
+  }
 }

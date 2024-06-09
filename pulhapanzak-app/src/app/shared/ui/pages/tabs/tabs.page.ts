@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonTabBar, IonTabButton, IonTabs, IonIcon, IonLabel} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import {homeOutline, personOutline, imageOutline} from 'ionicons/icons'
+import {homeSharp, personSharp, folderOpenSharp} from 'ionicons/icons'
 
 @Component({
   selector: 'app-tabs',
@@ -15,7 +15,7 @@ import {homeOutline, personOutline, imageOutline} from 'ionicons/icons'
 export class TabsPage {
 
   constructor() {
-    addIcons({homeOutline, personOutline, imageOutline})
+    addIcons({homeSharp, personSharp, folderOpenSharp})
   }
 
 
