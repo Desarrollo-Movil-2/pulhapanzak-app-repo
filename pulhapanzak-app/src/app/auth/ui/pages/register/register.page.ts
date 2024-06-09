@@ -133,7 +133,7 @@ export class RegisterPage {
       const userDto = await this._authService.signInWithGoogle();
       if (userDto) {
         this.showToast('Usuario registrado con Google correctamente', 'success');
-        this._router.navigate(['/home']);
+        this._router.navigate(['tabs/home']);
       }
     } catch (error) {
       console.error('Error al registrar con Google:', error);
@@ -156,7 +156,7 @@ export class RegisterPage {
     try {
       this.isLoading = true;
       await this._authService.signInWithGoogle();
-      this._router.navigate(['/home']);
+      this._router.navigate(['tabs/home']);
     } catch (error) {
       this.showToast('Error al iniciar sesión con Google', 'danger');
       console.error('Error al iniciar sesión con Google:', error);
