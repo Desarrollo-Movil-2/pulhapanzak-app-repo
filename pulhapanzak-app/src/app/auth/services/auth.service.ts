@@ -57,7 +57,7 @@ export class AuthService {
     const response: UserCredential = await createUserWithEmailAndPassword(
       this._auth,
       user.email,
-      user.password
+      user.password!
     );
     user.uid = response.user?.uid || '';
     const { password, ...userData } = user;
@@ -96,6 +96,8 @@ export class AuthService {
         phoneNumber: user.phoneNumber || '',
         identityNumber: '',
         photoUrl: user.photoURL || '',
+        birthdate: null,
+        deviceId: null,
       };
       const { password, ...userData } = newUser;
       await this.createUserInFirestore(userData);
@@ -112,6 +114,8 @@ export class AuthService {
       phoneNumber: user.phoneNumber,
       identityNumber: user.identityNumber,
       photoUrl: user.photoUrl,
+      birthdate: user.birthdate || null,
+      deviceId: user.deviceId || null,
     });
   }
 
@@ -156,7 +160,7 @@ export class AuthService {
     return user;
   }
 
-  async getUserLoggued() {
+  async getUserLoggued(): Promise<IUser | null> {
     try {
       const user = await this.getCurrentUser();
       const userDocument = doc(this._firestore, PATH, user?.uid ?? '');

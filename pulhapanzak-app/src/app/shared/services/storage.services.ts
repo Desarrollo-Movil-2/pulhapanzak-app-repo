@@ -7,8 +7,6 @@ import {
   deleteObject,
 } from '@angular/fire/storage';
 
-const PATH = 'users';
-
 @Injectable({
   providedIn: 'root',
 })

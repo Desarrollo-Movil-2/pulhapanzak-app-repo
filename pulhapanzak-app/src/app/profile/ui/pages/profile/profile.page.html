@@ -5,11 +5,62 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="profile-container">
-    <!-- Aquí puedes agregar el contenido del perfil del usuario -->
+  <div class="profile-container" *ngIf="!loadingData ">
+    <div class="contendor-img-profile">
+      <div class="profile-image-container">
+        <ion-img [src]="profileImageUrl" (click)="changeProfileImage()"></ion-img>
+      </div>
+    </div>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <ion-item>
+        <ion-label position="floating">Nombre Completo</ion-label>
+        <ion-input formControlName="fullName" [ngClass]="{'invalid': isFullNameInvalid}"></ion-input>
+      </ion-item>
+      <div *ngIf="isFullNameInvalid" class="error-message">Nombre completo es requerido</div>
+      
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input formControlName="phoneNumber" type="tel" [ngClass]="{'invalid': isPhoneNumberInvalid}"></ion-input>
+      </ion-item>
+      <div *ngIf="isPhoneNumberInvalid" class="error-message">
+        <span *ngIf="phoneNumber?.errors?.['required']">Teléfono es requerido</span>
+        <span *ngIf="phoneNumber?.errors?.['minlength']">Teléfono debe tener al menos 8 dígitos</span>
+        <span *ngIf="phoneNumber?.errors?.['pattern']">Teléfono debe contener solo números</span>
+      </div>
+      
+      <ion-item>
+        <ion-label position="floating">DNI</ion-label>
+        <ion-input formControlName="identityNumber" type="text" [ngClass]="{'invalid': isIdentityNumberInvalid}"></ion-input>
+      </ion-item>
+      <div *ngIf="isIdentityNumberInvalid" class="error-message">
+        <span *ngIf="identityNumber?.errors?.['required']">DNI es requerido</span>
+        <span *ngIf="identityNumber?.errors?.['minlength']">DNI debe tener al menos 13 dígitos</span>
+        <span *ngIf="identityNumber?.errors?.['pattern']">DNI debe contener solo números</span>
+      </div>
+      
+      <ion-item>
+        <ion-label position="floating">Fecha de Nacimiento</ion-label>
+        <ion-input formControlName="birthdate" type="date" [ngClass]="{'invalid': isBirthDateInvalid}"></ion-input>
+      </ion-item>
+      <div *ngIf="isBirthDateInvalid" class="error-message">
+        <span *ngIf="birthdate?.errors?.['required']">Fecha de nacimiento es requerida</span>
+        <span *ngIf="birthdate?.errors?.['invalidDate']">Fecha de nacimiento no puede ser mayor a la actual</span>
+      </div>
+      <div class="btn-container">
+        <ion-button class="f-white" shape="round" type="submit" expand="full" color="primary" [disabled]="!profileForm.valid && !imageChanged">
+          Guardar
+        </ion-button>
+      </div>
+     
+    </form>
+    <div class="btn-container">
+      <ion-button (click)="logout()" expand="full" color="danger">
+        Cerrar Sesión
+      </ion-button>
+    </div>
+  </div>
 
-    <ion-button (click)="logout()" expand="full" shape="round" color="danger">
-      Cerrar Sesión
-    </ion-button>
+  <div class="loading-data" *ngIf="loadingData">
+    <ion-spinner></ion-spinner>
   </div>
 </ion-content>
