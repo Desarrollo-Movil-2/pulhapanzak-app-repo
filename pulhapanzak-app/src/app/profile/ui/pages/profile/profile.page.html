@@ -1,14 +1,15 @@
 <ion-content>
   <ion-header>
     <ion-toolbar>
-      <ion-title>Perfil</ion-title>
+      <ion-title>Mi Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div class="profile-container" *ngIf="!loadingData ">
+  <div class="profile-container" *ngIf="!loadingData">
     <div class="contendor-img-profile">
       <div class="profile-image-container">
         <ion-img [src]="profileImageUrl" (click)="changeProfileImage()"></ion-img>
+        <ion-icon name="create-outline" class="edit-icon" (click)="changeProfileImage()"></ion-icon>
       </div>
     </div>
     <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
@@ -47,16 +48,21 @@
         <span *ngIf="birthdate?.errors?.['invalidDate']">Fecha de nacimiento no puede ser mayor a la actual</span>
       </div>
       <div class="btn-container">
-        <ion-button class="f-white" shape="round" type="submit" expand="full" color="primary" [disabled]="!profileForm.valid && !imageChanged">
+        <button class="btn-save-profile" type="submit" expand="full" color="primary" [disabled]="!profileForm.valid && !imageChanged">
           Guardar
-        </ion-button>
+        </button>
       </div>
-     
     </form>
     <div class="btn-container">
-      <ion-button (click)="logout()" expand="full" color="danger">
+      <button class="btn-logout" (click)="logout()" expand="full" color="danger">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#3880FF" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+          <path d="M9 12h12l-3 -3" />
+          <path d="M18 15l3 -3" />
+        </svg>
         Cerrar Sesión
-      </ion-button>
+      </button>
     </div>
   </div>
 

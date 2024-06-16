@@ -12,8 +12,11 @@ import {
   IonInput,
   IonButton,
   IonImg,
+  IonIcon,
   IonSpinner
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { createOutline } from 'ionicons/icons';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { StorageService } from '../../../../shared/services/storage.services';
@@ -40,7 +43,8 @@ import { IUser } from 'src/app/shared/models/user-interface';
     CommonModule,
     ReactiveFormsModule,
     IonImg,
-    IonSpinner
+    IonSpinner,
+    IonIcon
   ]
 })
 export class ProfilePage implements OnInit {
@@ -63,6 +67,7 @@ export class ProfilePage implements OnInit {
       birthdate: ['', [Validators.required, this.birthDateValidator]],
       deviceId: ['']
     });
+    addIcons({ createOutline });
   }
 
   ngOnInit() {
@@ -82,12 +87,12 @@ export class ProfilePage implements OnInit {
               this.profileImageUrl = userData.photoUrl;
             }
           }
-          this.loadingData = false; // Datos cargados, esconder el spinner
+          this.loadingData = false;
         }).catch(() => {
-          this.loadingData = false; // En caso de error, esconder el spinner
+          this.loadingData = false; 
         });
       } else {
-        this.loadingData = false; // En caso de no tener usuario, esconder el spinner
+        this.loadingData = false; 
       }
     });
   }
