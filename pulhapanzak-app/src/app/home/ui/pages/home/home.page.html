@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Bienvenido(a): {{ user?.name }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  @if(cargando){
+    <div class="loading-container">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando...</p>
+    </div>
+  }
+  @if(!cargando){
+    <div  class="container">
+      <div class="characters-grid">
+        @for(character of characters; track character.id){
+          <div class="character-card">
+            <img class="img-card" [src]="character.image" alt="{{ character.name }}"/>
+            <div class="container-info">
+              <h4 class="text-center">{{ character.name }}</h4>
+              <p>Species: {{character.species}}</p>
+              <p>Status: {{character.status}}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+    
+
+</ion-content>

@@ -8,7 +8,7 @@ export const routes: Routes = [
    children:[
     {
         path:'home',
-        loadComponent:()=>import('../../../../home/home.page').then((m)=>m.HomePage)
+        loadComponent:()=>import('../../../../home/ui/pages/home/home.page').then((m)=>m.HomePage)
     },
     {
         path:'gallery',
