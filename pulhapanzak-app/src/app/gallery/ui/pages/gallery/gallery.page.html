@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Galería
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  @if(!contentLoaded) {
+    <ion-spinner name="crescent" class="spinner-center"></ion-spinner>
+  } @else {
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let gallery of galleries">
+          <ion-card class="gallery-card">
+            <ion-img [src]="gallery.photo" (ionImgDidLoad)="imageLoaded()"></ion-img>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  }
+</ion-content>

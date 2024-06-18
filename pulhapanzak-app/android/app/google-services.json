@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "666562475134",
+    "project_id": "pulha-app-616f1",
+    "storage_bucket": "pulha-app-616f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:666562475134:android:f4e86d11e5ca6ea517142f",
+        "android_client_info": {
+          "package_name": "com.pulhapp.dm2.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "666562475134-a4e2ekfspaihotfh1plqnijepeo7tjc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXgkVtb8H2Oege98bK39Fyz-Vg7vNRh4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "666562475134-a4e2ekfspaihotfh1plqnijepeo7tjc9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

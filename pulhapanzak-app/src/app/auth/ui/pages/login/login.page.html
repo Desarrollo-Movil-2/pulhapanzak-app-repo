@@ -1,0 +1,101 @@
+<ion-content class="container-view">
+  <p class="title-login">Iniciar Sesión</p>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="formulario-login">
+    <div class="container-forms-login">
+      <div class="div-label-login">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-mail"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#FB0021"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"
+          />
+          <path d="M3 7l9 6l9 -6" />
+        </svg>
+        <ion-label>Correo Electrónico</ion-label>
+      </div>
+      <ion-input
+        formControlName="email"
+        type="email"
+        class="input-modify"
+        [ngClass]="{ error: isEmailFormatInvalid || isEmailRequired}"
+      ></ion-input>
+      <p *ngIf="isEmailFormatInvalid" class="error-message">El correo es inválido</p>
+      <p *ngIf="isEmailRequired" class="error-message">El correo es requerido</p>
+    </div>
+
+    <div class="container-forms-login">
+      <div class="div-label-login">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-lock"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="#FB0021"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"
+          />
+          <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" />
+          <path d="M8 11v-4a4 4 0 1 1 8 0v4" />
+        </svg>
+        <ion-label>Contraseña</ion-label>
+      </div>
+      <ion-input
+        type="password"
+        formControlName="password"
+        class="input-modify"
+        [ngClass]="{ error: isPasswordRequired }"
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+      </ion-input>
+      <p *ngIf="isPasswordRequired" class="error-message">
+        La contraseña es requerida
+      </p>
+      <p class="pass-forget" (click)="onForgotPassword()">¿Olvidaste tu contraseña?</p>
+    </div>
+
+    <ion-button
+      expand="full"
+      type="submit"
+      shape="round"
+      [disabled]="loginForm.invalid"
+      [ngClass]="{
+        'btn-active': !loginForm.invalid,
+        'btn-inactive': loginForm.invalid
+      }"
+    >Iniciar Sesión</ion-button>
+  </form>
+  
+  <div class="divider">
+    <span class="divider-text"> O </span>
+  </div>
+  
+  <div class="container-google-auth">
+    <ion-button class="btn-google-auth" (click)="onGoogleLogin()">
+      <img src="assets/icon/google-icon.png" alt="Google Icon" class="google-icon">
+      Iniciar sesión con Google
+    </ion-button>
+  </div>
+  
+  <div class="register-link">
+    <ion-router-link routerLink="/register" class="btn-back">
+      <span>¿No tienes cuenta?</span><span class="span-green">Regístrate ahora</span>
+    </ion-router-link>
+  </div>
+</ion-content> 

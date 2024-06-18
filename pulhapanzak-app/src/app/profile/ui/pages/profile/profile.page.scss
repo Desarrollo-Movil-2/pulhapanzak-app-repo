@@ -1,0 +1,102 @@
+.profile-container {
+  padding: 5px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.contendor-img-profile {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-image-container {
+  position: relative; /* Necesario para la posición absoluta del icono */
+  width: 150px; 
+  height: 150px;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.profile-image-container ion-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-image-container ion-icon.edit-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.error-message {
+  margin-top: 5px!important;
+  padding-right: 20px;
+  color: #FB0021;
+  font-size: 12px;
+}
+
+.invalid {
+  border: 2px solid red;
+}
+
+ion-item {
+  width: 100%;
+}
+
+.loading-data {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-container {
+  padding: 10px;
+}
+
+.button-native {
+  border-radius: 5px;
+}
+
+.btn-save-profile {
+  letter-spacing: 3px;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  height: 45px;
+  background-color: #3880FF;
+  border-radius: 6px!important;
+}
+
+.btn-logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: #3880FF;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  height: 45px;
+  border: solid 3px #3880FF;
+  border-radius: 6px!important;
+}
+
+.icon-tabler-logout {
+  margin-right: 5px;
+}
+
+.button-round {
+  --border-radius: 30px!important;
+}
