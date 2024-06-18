@@ -13,7 +13,8 @@ import {
   IonButton,
   IonImg,
   IonIcon,
-  IonSpinner
+  IonSpinner,
+  AlertController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { createOutline } from 'ionicons/icons';
@@ -21,7 +22,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { StorageService } from '../../../../shared/services/storage.services';
 import { User } from '@angular/fire/auth';
-import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
+import { doc, Firestore } from '@angular/fire/firestore';
 import { ToastController } from '@ionic/angular';
 import { IUser } from 'src/app/shared/models/user-interface';
 
@@ -52,12 +53,13 @@ export class ProfilePage implements OnInit {
   profileImageUrl: string = 'assets/default-user.png';
   imageChanged: boolean = false;
   isLoading = false;
-  loadingData = true; // Nueva propiedad para controlar el spinner
+  loadingData = true;
   private currentUser: User | null = null;
   private authService = inject(AuthService);
   private storageService = inject(StorageService);
   private router = inject(Router);
   private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
 
   constructor(private fb: FormBuilder, private firestore: Firestore) {
     this.profileForm = this.fb.group({
@@ -119,6 +121,27 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  async confirmSave() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Quieres guardar los cambios?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Sí',
+          handler: () => {
+            this.saveProfile();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   async saveProfile() {
     if (this.profileForm.valid && (this.imageChanged || this.profileForm.dirty)) {
       this.isLoading = true;
@@ -147,6 +170,8 @@ export class ProfilePage implements OnInit {
 
       this.showToast('Perfil actualizado correctamente', 'success');
       this.isLoading = false;
+      this.profileForm.markAsPristine();
+      this.imageChanged = false;
     } else {
       this.showToast('Por favor, completa el formulario correctamente', 'danger');
     }

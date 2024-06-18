@@ -12,44 +12,48 @@
         <ion-icon name="create-outline" class="edit-icon" (click)="changeProfileImage()"></ion-icon>
       </div>
     </div>
-    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+
+    <form [formGroup]="profileForm" (ngSubmit)="confirmSave()">
       <ion-item>
         <ion-label position="floating">Nombre Completo</ion-label>
         <ion-input formControlName="fullName" [ngClass]="{'invalid': isFullNameInvalid}"></ion-input>
+        <div *ngIf="isFullNameInvalid" class="error-message">Nombre completo es requerido</div>
       </ion-item>
-      <div *ngIf="isFullNameInvalid" class="error-message">Nombre completo es requerido</div>
-      
       <ion-item>
         <ion-label position="floating">Teléfono</ion-label>
         <ion-input formControlName="phoneNumber" type="tel" [ngClass]="{'invalid': isPhoneNumberInvalid}"></ion-input>
+        <div *ngIf="isPhoneNumberInvalid" class="error-message">
+          <span *ngIf="phoneNumber?.errors?.['required']">Teléfono es requerido</span>
+          <span *ngIf="phoneNumber?.errors?.['minlength']">Teléfono debe tener al menos 8 dígitos</span>
+          <span *ngIf="phoneNumber?.errors?.['pattern']">Teléfono debe contener solo números</span>
+        </div>
       </ion-item>
-      <div *ngIf="isPhoneNumberInvalid" class="error-message">
-        <span *ngIf="phoneNumber?.errors?.['required']">Teléfono es requerido</span>
-        <span *ngIf="phoneNumber?.errors?.['minlength']">Teléfono debe tener al menos 8 dígitos</span>
-        <span *ngIf="phoneNumber?.errors?.['pattern']">Teléfono debe contener solo números</span>
-      </div>
-      
       <ion-item>
         <ion-label position="floating">DNI</ion-label>
         <ion-input formControlName="identityNumber" type="text" [ngClass]="{'invalid': isIdentityNumberInvalid}"></ion-input>
+        <div *ngIf="isIdentityNumberInvalid" class="error-message">
+          <span *ngIf="identityNumber?.errors?.['required']">DNI es requerido</span>
+          <span *ngIf="identityNumber?.errors?.['minlength']">DNI debe tener al menos 13 dígitos</span>
+          <span *ngIf="identityNumber?.errors?.['pattern']">DNI debe contener solo números</span>
+        </div>
       </ion-item>
-      <div *ngIf="isIdentityNumberInvalid" class="error-message">
-        <span *ngIf="identityNumber?.errors?.['required']">DNI es requerido</span>
-        <span *ngIf="identityNumber?.errors?.['minlength']">DNI debe tener al menos 13 dígitos</span>
-        <span *ngIf="identityNumber?.errors?.['pattern']">DNI debe contener solo números</span>
-      </div>
-      
       <ion-item>
         <ion-label position="floating">Fecha de Nacimiento</ion-label>
         <ion-input formControlName="birthdate" type="date" [ngClass]="{'invalid': isBirthDateInvalid}"></ion-input>
+        <div *ngIf="isBirthDateInvalid" class="error-message">
+          <span *ngIf="birthdate?.errors?.['required']">Fecha de nacimiento es requerida</span>
+          <span *ngIf="birthdate?.errors?.['invalidDate']">Fecha de nacimiento no puede ser mayor a la actual</span>
+        </div>
       </ion-item>
-      <div *ngIf="isBirthDateInvalid" class="error-message">
-        <span *ngIf="birthdate?.errors?.['required']">Fecha de nacimiento es requerida</span>
-        <span *ngIf="birthdate?.errors?.['invalidDate']">Fecha de nacimiento no puede ser mayor a la actual</span>
-      </div>
       <div class="btn-container">
-        <button class="btn-save-profile" type="submit" expand="full" color="primary" [disabled]="!profileForm.valid && !imageChanged">
-          Guardar
+        <button class="btn-save-profile" 
+                [ngClass]="{'btn-disable': !profileForm.dirty && !imageChanged || !profileForm.valid}" 
+                type="submit" 
+                expand="full" 
+                color="primary" 
+                [disabled]="!profileForm.dirty && !imageChanged || !profileForm.valid || isLoading">
+          <ng-container *ngIf="!isLoading; else loadingContent">Guardar</ng-container>
+          <ng-template #loadingContent><ion-spinner></ion-spinner></ng-template>
         </button>
       </div>
     </form>

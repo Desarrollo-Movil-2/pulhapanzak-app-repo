@@ -39,13 +39,17 @@
 }
 
 .error-message {
-  margin-top: 5px!important;
-  padding-right: 20px;
+  margin-top: 4px !important;
   color: #FB0021;
   font-size: 12px;
+  margin-bottom: 12px;
 }
 
 .invalid {
+  margin-top: 10px;
+  margin-bottom: 8px;
+  padding: 0 5px 0 10px !important;
+  border-radius: 10px;
   border: 2px solid red;
 }
 
@@ -76,6 +80,10 @@ ion-item {
   height: 45px;
   background-color: #3880FF;
   border-radius: 6px!important;
+}
+
+.btn-disable{
+  background-color: gray!important;
 }
 
 .btn-logout {
